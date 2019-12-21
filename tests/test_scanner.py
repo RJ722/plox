@@ -1,6 +1,5 @@
 from lox.scanner import Scanner
 from lox.tokentype import TokenType
-from lox.token import Token
 
 from . import l
 
