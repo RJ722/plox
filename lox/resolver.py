@@ -32,7 +32,7 @@ class Resolver(Visitor):
                 return
 
     def resolve_function(self, stmt, function_type):
-        enclosing_function = function_type
+        enclosing_function = self.current_function
         self.current_function = function_type
         self._begin_scope()
         for param in stmt.params:
@@ -40,6 +40,7 @@ class Resolver(Visitor):
             self._define(param)
         self.resolve(stmt.body)
         self._end_scope()
+        self.current_function = enclosing_function
 
     def _begin_scope(self):
         self.scopes.append({})
