@@ -177,7 +177,9 @@ class Parser:
         self._consume(TokenType.RIGHT_PAREN, "Expect ')' after if condition.")
 
         then_branch = self.statement()
-        else_branch = self.statement() if self._match([TokenType.ELSE]) else None
+        else_branch = None
+        if self._match([TokenType.ELSE]):
+            else_branch = self.statement()
 
         return Stmt.If(condition, then_branch, else_branch)
 
