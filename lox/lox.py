@@ -51,7 +51,6 @@ class Lox:
         statements = Parser(tokens, self).parse()
         if self.had_error:
             return
-        resolver = self.resolver.resolve(statements)
         if self.had_error:
             return
         self.interpreter.interpret(statements)
