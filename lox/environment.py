@@ -6,7 +6,7 @@ class Environment:
         self.enclosing = enclosing
 
     def ancestor(self, distance):
-        for i in range(distance):
+        for _ in range(distance):
             self = self.enclosing
         return self
 
