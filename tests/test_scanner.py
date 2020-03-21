@@ -1,8 +1,6 @@
 from lox.scanner import Scanner
 from lox.tokentype import TokenType
 
-from . import l
-
 def get_tokens(code, l):
     return Scanner(code, l).scan_tokens()
 
