@@ -8,9 +8,11 @@ def v():
 def test_unused_code(v):
     v.scavenge(['lox'])
     v.report()
-    assert v.get_unused_code() == []
+    if v.get_unused_code() != []:
+        raise AssertionError
 
 def test_unused_test(v):
     v.scavenge(['tests'])
     v.report()
-    assert v.get_unused_code() == []
+    if v.get_unused_code() != []:
+        raise AssertionError

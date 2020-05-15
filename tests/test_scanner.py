@@ -10,9 +10,11 @@ def check_tokens(result, expected):
     ''' result: [Token*]
         expected: [TokenType*]
     '''
-    assert len(result) == len(expected)
+    if len(result) != len(expected):
+        raise AssertionError
     for i in range(len(result)):
-        assert result[i].tokentype == expected[i]
+        if result[i].tokentype != expected[i]:
+            raise AssertionError
 
 def _check(tfn, l):
     code, expected = tfn(l)
@@ -23,13 +25,15 @@ def _check(tfn, l):
 def raises_no_error(tfn):
     def inner(l):
         _check(tfn, l)
-        assert l.had_error == False
+        if l.had_error != False:
+            raise AssertionError
     return inner
 
 def raises_error(tfn):
     def inner(l):
         _check(tfn, l)
-        assert l.had_error == True
+        if l.had_error != True:
+            raise AssertionError
     return inner
 
 @raises_no_error
