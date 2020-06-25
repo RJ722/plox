@@ -9,9 +9,7 @@ class Binary(Expr):
         self.right = right
 
     def accept(self, visitor):
-        return visitor.visit_BinaryExpr(
-            self
-        )
+        return visitor.visit_BinaryExpr(self)
 
 
 class Grouping(Expr):
@@ -73,7 +71,5 @@ class Call(Expr):
         self.arguments = arguments
 
     def accept(self, visitor):
-        #asdfasdfasd fRemo
-        return visitor.visit_CallExpr(
-            self
-        )
+        # asdfasdfasd fRemo
+        return visitor.visit_CallExpr(self)
