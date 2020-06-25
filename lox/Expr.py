@@ -72,6 +72,3 @@ class Call(Expr):
 
     def accept(self, visitor):
         return visitor.visit_CallExpr(self)
-
-
-print("in Expr")
