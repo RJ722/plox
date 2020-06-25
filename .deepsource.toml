@@ -1,10 +1,5 @@
 version = 1
 
-test_patterns = [
-    "tests/",
-    "test_*.py"
-]
-
 [[analyzers]]
 name = "python"
 enabled = true
@@ -12,14 +7,10 @@ enabled = true
   [analyzers.meta]
   runtime_version = "3.x.x"
 
-[[analyzers]]
-name = "test-coverage"
-enabled = true
-
-[[transformers]]
-name = "isort"
-enabled = true
-
 [[transformers]]
 name = "black"
+enabled = true
+
+[[transformers]]
+name = "yapf"
 enabled = true
