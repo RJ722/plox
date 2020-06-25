@@ -6,6 +6,7 @@ from lox.resolver import Resolver
 from lox.scanner import Scanner
 from lox.tokentype import TokenType
 
+
 class Lox:
     def __init__(self):
         self.had_error = False
@@ -15,7 +16,7 @@ class Lox:
 
     def _report(self, line, where, message):
         # Should we pipe to `sys.stderr`?
-        print(f'[Line {line}] Error{where}: {message}')
+        print(f"[Line {line}] Error{where}: {message}")
 
     def error(self, token, message):
         self.had_error = True
@@ -23,13 +24,13 @@ class Lox:
             self._report(token.line, " at end", message)
         else:
             self._report(token.line, f" at '{token.lexeme}'", message)
-    
+
     def runtime_error(self, err):
-        print(f'[Line {err.token.line}] {err}')
+        print(f"[Line {err.token.line}] {err}")
         self.had_runtime_error = True
 
     def run_file(self, filename):
-        with open(filename, 'r') as f:
+        with open(filename, "r") as f:
             self.run(f.read())
 
         EXIT_CODE = 0
@@ -41,7 +42,7 @@ class Lox:
 
     def run_prompt(self):
         while True:
-            reader = input('> ')
+            reader = input("> ")
             self.run(reader)
             self.had_error = False
 
@@ -56,6 +57,7 @@ class Lox:
             return
         self.interpreter.interpret(statements)
 
+
 def main():
     l = Lox()
     if len(sys.argv) > 2:
@@ -67,5 +69,5 @@ def main():
         l.run_prompt()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

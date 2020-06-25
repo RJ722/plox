@@ -2,7 +2,8 @@ from enum import Enum
 
 from lox.visitor import Visitor
 
-FunctionType = Enum('FunctionType', ['NONE', 'FUNCTION'])
+FunctionType = Enum("FunctionType", ["NONE", "FUNCTION"])
+
 
 class Resolver(Visitor):
     def __init__(self, lox, interpreter):
@@ -54,7 +55,8 @@ class Resolver(Visitor):
         scope = self.scopes[-1]
         if name.lexeme in scope.keys():
             self.lox.error(
-                name, "Variable with this name already declared in this scope.")
+                name,
+                "Variable with this name already declared in this scope.")
             # We don't need to return/stop here, because `self.lox.had_error`
             # gets set and no code would be interpreted.
         scope[name.lexeme] = False
@@ -103,8 +105,8 @@ class Resolver(Visitor):
         self.resolve(stmt.body)
 
     def visit_VariableExpr(self, expr):
-        if ((not self.scope_is_empty) and
-                self.scopes[-1].get(expr.name.lexeme, None) == False):
+        if (not self.scope_is_empty) and self.scopes[-1].get(
+                expr.name.lexeme, None) == False:
             self.lox.error(
                 expr.name,
                 "Cannot read local variable in it's own initializer.")

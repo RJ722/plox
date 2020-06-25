@@ -3,6 +3,7 @@ from lox.exceptions import ParseException
 from lox import Stmt
 from lox.tokentype import TokenType
 
+
 class Parser:
     def __init__(self, tokens, lox):
         self.tokens = tokens
@@ -51,8 +52,8 @@ class Parser:
             arguments.append(self.expression())
             while self._match([TokenType.COMMA]):
                 arguments.append(self.expression())
-        paren = self._consume(
-            TokenType.RIGHT_PAREN, "Expected ')' after arguments.")
+        paren = self._consume(TokenType.RIGHT_PAREN,
+                              "Expected ')' after arguments.")
         if len(arguments) > 255:
             self._error(self._peek(), "Cannot have more than 255 arguments.")
         return Expr.Call(callee, paren, arguments)
@@ -68,31 +69,32 @@ class Parser:
             self._synchronize()
 
     def function_declaration(self, kind):
-        '''We reuse this method for both function and method declaration.
+        """We reuse this method for both function and method declaration.
            `kind` is used to distinguish between the two.
-        '''
+        """
         name = self._consume(TokenType.IDENTIFIER, f"Expect {kind} name.")
         self._consume(TokenType.LEFT_PAREN, f"Expect '(' after {kind} name.")
         parameters = []
         if not self._check(TokenType.RIGHT_PAREN):
-            parameters.append(self._consume(
-                TokenType.IDENTIFIER, "Expect parameter name."))
+            parameters.append(
+                self._consume(TokenType.IDENTIFIER, "Expect parameter name."))
             while self._match([TokenType.COMMA]):
-                parameters.append(self._consume(
-                    TokenType.IDENTIFIER, "Expect parameter name."))
+                parameters.append(
+                    self._consume(TokenType.IDENTIFIER,
+                                  "Expect parameter name."))
         if len(parameters) > 255:
             self._error(self._peek(), "Cannot have more than 255 parameters.")
         self._consume(TokenType.RIGHT_PAREN, "Expect ')'after parameters.")
-        self._consume(
-            TokenType.LEFT_BRACE, "Expect '{' before" + kind + "body.")
+        self._consume(TokenType.LEFT_BRACE,
+                      "Expect '{' before" + kind + "body.")
         body = self.block()
         return Stmt.Function(name, parameters, body)
 
     def var_declaration(self):
         name = self._consume(TokenType.IDENTIFIER, "Expect variable name.")
         value = self.expression() if self._match([TokenType.EQUAL]) else None
-        self._consume(
-            TokenType.SEMICOLON, "Expect ';' after variable declaration.")
+        self._consume(TokenType.SEMICOLON,
+                      "Expect ';' after variable declaration.")
         return Stmt.Var(name, value)
 
     def statement(self):
@@ -112,7 +114,8 @@ class Parser:
 
     def block(self):
         statements = []
-        while (not self._check(TokenType.RIGHT_BRACE)) and (not self._at_end()):
+        while (not self._check(
+                TokenType.RIGHT_BRACE)) and (not self._at_end()):
             statements.append(self.declaration())
         self._consume(TokenType.RIGHT_BRACE, "Expect '}' after block.")
         return statements
@@ -234,8 +237,12 @@ class Parser:
 
     def comparison(self):
         expr = self.addition()
-        while self._match([TokenType.GREATER, TokenType.GREATER_EQUAL,
-                           TokenType.LESS, TokenType.LESS_EQUAL]):
+        while self._match([
+                TokenType.GREATER,
+                TokenType.GREATER_EQUAL,
+                TokenType.LESS,
+                TokenType.LESS_EQUAL,
+        ]):
             operator = self._previous
             right = self.addition()
             expr = Expr.Binary(expr, operator, right)
@@ -285,22 +292,30 @@ class Parser:
             return Expr.Literal(self._previous.literal)
         elif self._match([TokenType.LEFT_PAREN]):
             expr = self.expression()
-            self._consume(TokenType.RIGHT_PAREN, "Expect ')' after expression.")
+            self._consume(TokenType.RIGHT_PAREN,
+                          "Expect ')' after expression.")
             return Expr.Grouping(expr)
         elif self._match([TokenType.IDENTIFIER]):
             return Expr.Variable(self._previous)
-        raise self._error(self._peek(), 'Expect expression.')
+        raise self._error(self._peek(), "Expect expression.")
 
     def _synchronize(self):
-        '''Skip tokens until a new statement is found in case of an error.
-        '''
+        """Skip tokens until a new statement is found in case of an error.
+        """
         self._advance()
         while not self._at_end():
             if self._previous == TokenType.SEMICOLON:
                 return
             if self._peek().tokentype in (
-    TokenType.CLASS, TokenType.FUN, TokenType.VAR, TokenType.FOR, TokenType.IF,
-    TokenType.WHILE, TokenType.PRINT, TokenType.RETURN):
+                    TokenType.CLASS,
+                    TokenType.FUN,
+                    TokenType.VAR,
+                    TokenType.FOR,
+                    TokenType.IF,
+                    TokenType.WHILE,
+                    TokenType.PRINT,
+                    TokenType.RETURN,
+            ):
                 return
             self._advance()
 
