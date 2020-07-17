@@ -1,3 +1,5 @@
+print('Testing; ignore')
+
 class Expr:
     pass
 
