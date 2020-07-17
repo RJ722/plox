@@ -7,29 +7,33 @@ from lox.loxreturn import Return
 from lox.tokentype import TokenType
 from lox.visitor import Visitor
 
+
 def _is_true(obj):
-    '''Only `nil` and `false` are false. Everything else _evaluates to true.
-    '''
+    """Only `nil` and `false` are false. Everything else _evaluates to true.
+    """
     if obj == None:
         return False
     elif isinstance(obj, bool):
         return obj
     return True
 
+
 def _check_num_operand(op, *numbers):
     for num in numbers:
         if not isinstance(num, float):
-            raise RuntimeException(op, 'Operand must be a number.')
+            raise RuntimeException(op, "Operand must be a number.")
+
 
 def stringify(obj):
     if obj == None:
-        return 'nil'
+        return "nil"
     if isinstance(obj, bool):
         # Lox doesn't capitalize the starting 't' and 'f'.
         if obj:
-            return 'true'
-        return 'false'
+            return "true"
+        return "false"
     return str(obj)
+
 
 class Interpreter(Visitor):
     # self.environment points towards the current environment, whereas
@@ -91,7 +95,8 @@ class Interpreter(Visitor):
                 return left + right
             except TypeError:
                 raise RuntimeException(
-            expr.operator, 'Operands must be two numbers or two strings.')
+                    expr.operator, "Operands must be two numbers or two strings."
+                )
         elif expr.operator.tokentype == TokenType.MINUS:
             _check_num_operand(expr.operator, left, right)
             return left - right
@@ -138,7 +143,7 @@ class Interpreter(Visitor):
         if expr.operator.tokentype == TokenType.OR:
             if _is_true(left):
                 return left
-        else: # AND
+        else:  # AND
             if not _is_true(left):
                 return left
         return self._evaluate(expr.right)
@@ -150,8 +155,7 @@ class Interpreter(Visitor):
             arguments.append(self._evaluate(argument))
         # callee - what would be the type of callee?
         if not isinstance(callee, LoxCallable):
-            raise RuntimeException(
-    expr.paren, "Can only call functions and classes.")
+            raise RuntimeException(expr.paren, "Can only call functions and classes.")
 
         # The original author, while writing this compiler in Java typecasted
         # the callee to LoxCallable, even after checking `isinstance(callee,
@@ -167,8 +171,9 @@ class Interpreter(Visitor):
 
         if len(arguments) != callee.arity:
             raise RuntimeException(
-    expr.paren,
-    f"Expected {function.arity} arguments, but got {len(arguments)}.")
+                expr.paren,
+                f"Expected {function.arity} arguments, but got {len(arguments)}.",
+            )
         return callee.__call__(self, arguments)
 
     def visit_ExpressionStmt(self, stmt):
