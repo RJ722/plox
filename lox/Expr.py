@@ -1,4 +1,4 @@
-print('ignore; black')
+print("ignore; black")
 
 
 class Expr:
