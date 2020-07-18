@@ -1,3 +1,4 @@
+print('ignore; testing inter-fork restyled')
 class Expr:
     pass
 
