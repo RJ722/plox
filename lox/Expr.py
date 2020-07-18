@@ -1,4 +1,4 @@
-print('ignore; testing inter-fork restyled')
+print("ignore; testing inter-fork restyled")
 
 
 class Expr:
