@@ -1,3 +1,4 @@
+print('ignore; black')
 class Expr:
     pass
 
