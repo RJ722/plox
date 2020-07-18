@@ -4,6 +4,6 @@ class Token:
         self.lexeme = lexeme
         self.literal = literal
         self.line = line
-    
+
     def __str__(self):
         return f"{self.tokentype} {self.lexeme} {self.literal}"
