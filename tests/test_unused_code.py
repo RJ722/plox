@@ -14,3 +14,7 @@ def test_unused_test(v):
     v.scavenge(['tests'])
     v.report()
     assert v.get_unused_code() == []
+
+
+def test_truthy():
+    assert True
