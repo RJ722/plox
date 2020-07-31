@@ -1,10 +1,10 @@
-print('LoxCallable called!')
+print("LoxCallable called!")
 
-print('extra log which no one asked for')
+print("extra log which no one asked for")
 
-print('I am thinking of adding another one. Oh, wait, I already did! ;)')
+print("I am thinking of adding another one. Oh, wait, I already did! ;)")
 
-print('Last one, I promise!')
+print("Last one, I promise!")
 
 
 class LoxCallable:
