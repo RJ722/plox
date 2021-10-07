@@ -21,7 +21,7 @@ only support one I/O operation - printing on screen.
 The ``print`` statement is baked right into the core library itself. Since it's
 a statement, and not a function, it should be called without the parentheses.
 
-In fact, we are ready for out very first program::
+In fact, we are ready for our very first program::
 
     print "Hello, world!";
 
